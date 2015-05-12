@@ -33,14 +33,18 @@ void post (std::function<void()> callback, int index)
 }
 void run_taskq()
 {
-  for (int i=0;i<10;i++)
-  {
-    if (task_queue[i].posted)
+  bool run;
+  do {
+    run = false;
+    for (int i=0;i<10;i++)
     {
-      task_queue[i].posted = 0;
-      task_queue[i].callback();
+      if (task_queue[i].posted)
+      {
+        task_queue[i].posted = 0;
+        task_queue[i].callback();
+      }
     }
-  }
+  } while (run);
 }
 
 #define POSTFUN(task) \

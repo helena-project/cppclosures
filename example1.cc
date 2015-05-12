@@ -30,14 +30,19 @@ void post (callback_t callback, int index)
 }
 void run_taskq()
 {
-  for (int i=0;i<10;i++)
-  {
-    if (task_queue[i].posted)
+  bool run;
+  do {
+    run = false;
+    for (int i=0;i<10;i++)
     {
-      task_queue[i].posted = 0;
-      task_queue[i].callback();
+      if (task_queue[i].posted)
+      {
+        run = true;
+        task_queue[i].posted = 0;
+        task_queue[i].callback();
+      }
     }
-  }
+  } while (run);
 }
 
 #define POSTCLOSURE(task) \
