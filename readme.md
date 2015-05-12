@@ -34,3 +34,16 @@ a noop or overwrite the previous slot.
 The biggest use of closures is as parameters to functions as an OnDone callback.
 It would be a pity if this common case had terrible syntax or otherwise required
 a lot of mental effort.
+
+# Conclusion
+
+There appear to be two approaches (or a hybrid as a third). One is using lambdas
+directly. These cannot be passed as parameters to functions except as templated
+arguments, and they cannot be stored in variables except as auto variables. They
+cannot be returned from functions at all. This aside, they are fast and minimal.
+The second option is to convert a lambda to a std::function and use that. That
+allows the result to be returned, accepted as a parameter and stored in a variable.
+
+Example 1 demonstrates a task queue application using pure lambdas. Example 2
+does the same but using std::function. I suspect that the latter will be far
+more usable.
