@@ -40,6 +40,7 @@ void run_taskq()
     {
       if (task_queue[i].posted)
       {
+        run = true;
         task_queue[i].posted = 0;
         task_queue[i].callback();
       }
